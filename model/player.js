@@ -55,4 +55,7 @@ var Player = function (game) {
 	this.getPart = function () {
 		return this.cycle[this.cycleIndex];
 	}
+	this.getImg = function(){
+		return this.image[this.getPart()];
+	}
 }
