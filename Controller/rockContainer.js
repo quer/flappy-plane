@@ -4,7 +4,7 @@ var RockContainer = function (game) {
 	this.ctx = game.ctx;
 	this.topParts = ["rockDown", "rockGrassDown", "rockIceDown", "rockSnowDown"];
 	this.bottomParts = ["rock", "rockGrass", "rockIce", "rockSnow"];
-
+	this.lastaddetRock = 0;
 	this.rocks = [];
 
 	this.init = function () {
@@ -22,6 +22,11 @@ var RockContainer = function (game) {
 		}
 	}
 	this.update = function (delta) {
+		if(this.lastaddetRock + 100 < delta){
+			this.addRock();
+			this.lastaddetRock = delta;
+		}
+
 		for (var i = this.rocks.length - 1; i >= 0; i--) {
 			this.rocks[i].update(delta);
 			if(this.rocks[i].outOfBounce()){
@@ -31,7 +36,7 @@ var RockContainer = function (game) {
 	}
 	this.addRock = function () {
 		var part = Math.floor((Math.random() * this.topParts.length));
-		var rock = new Rock(this.game, this.image[this.topParts[part]], this.image[this.bottomParts[part]]); 
+		var rock = new Rock(this.game, this.image[this.topParts[part]], this.image[this.bottomParts[part]]);
 		this.rocks.push(rock);
 		console.log(this.rocks.length);
 	}

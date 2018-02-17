@@ -10,6 +10,7 @@ var Game = function (can, ctx) {
 	this.background = new Background(this);
 	this.rockContainer = new RockContainer(this);
 	this.isInited = false;
+	this.debug = true;
 
 	this.render = function () {
 		var start = Date.now();
@@ -46,6 +47,9 @@ var Game = function (can, ctx) {
 				this.isInited = true;
 			}
 		}.bind(this));
+	}
+	this.gameOver = function () {
+		gameStopGame();
 	}
 }
 var game = new Game(can, ctx);

@@ -21,6 +21,16 @@ var Player = function (game) {
 	}
 	this.render = function () {
 		this.ctx.drawImage(this.image[this.getPart()], this.x, this.y);
+
+		if(this.game.debug){
+			var lines = this.getCords();
+			for (var i = 0; i < lines.length; i++) {
+				this.game.ctx.beginPath();
+				this.game.ctx.moveTo(lines[i][0].x,lines[i][0].y);
+				this.game.ctx.lineTo(lines[i][1].x,lines[i][1].y);
+				this.game.ctx.stroke();		
+			}
+		}
 	}
 	this.update = function (delta) {
 		this.delta = delta;
@@ -55,7 +65,16 @@ var Player = function (game) {
 	this.getPart = function () {
 		return this.cycle[this.cycleIndex];
 	}
-	this.getImg = function(){
+	this.getCurrentImage = function(){
 		return this.image[this.getPart()];
+	}
+	this.getCords = function () {
+		var lineTopLeft = {x: this.x, y: this.y};
+		var lineTopRight = {x: this.x + this.getCurrentImage().width, y: this.y};
+		var lineBottomLeft = {x: this.x, y: this.y + this.getCurrentImage().height};
+		var lineBottomRight = {x: this.x + this.getCurrentImage().width, y: this.y + this.getCurrentImage().height};
+
+		return [[lineTopLeft, lineTopRight], [lineTopRight, lineBottomRight], [lineBottomRight, lineBottomLeft], [lineBottomLeft, lineTopLeft]];
+
 	}
 }
