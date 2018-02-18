@@ -3,7 +3,7 @@ var Rock = function (game, imageTop, imageBottom) {
 	this.game = game;
 	this.imageTop = imageTop;
 	this.imageBottom = imageBottom;
-	this.x = this.game.can.width;
+	this.x = ((this.game.ground.movingBackrounds) * this.game.ground.imageWidth) - this.imageTop.width;
 	this.topY = 0;
 	this.bottomY = 0;
 
@@ -33,9 +33,7 @@ var Rock = function (game, imageTop, imageBottom) {
 		}
 	}
 	this.update = function (delta) {
-		if(delta % Math.floor(this.game.background.movingBackroundSpeed /2) === 0){
-			this.x -= 2; 
-		}
+		this.x -= this.game.sharedValues.movingSpeed * 2;		
 		if(this.collision()){
 			this.game.gameOver();
 		}

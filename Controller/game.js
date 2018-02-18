@@ -2,15 +2,24 @@ var can = document.getElementById('game');
 var	ctx = can.getContext('2d');
 
 var Game = function (can, ctx) {
-	this.started = true;
+	this.started = false;
 	this.asset = {};
 	this.ctx = ctx;
 	this.can = can;
+	this.sharedValues = SharedValues;
 	this.player = new Player(this);
 	this.background = new Background(this);
 	this.rockContainer = new RockContainer(this);
+	this.ground = new Ground(this);
+	this.menuContainer = new MenuContainer(this);
 	this.isInited = false;
-	this.debug = true;
+	this.debug = {
+		debug: true,
+		gameSpeed: {
+			faster: false,
+			slower: false
+		}
+	};
 
 	this.render = function () {
 		var start = Date.now();
@@ -23,6 +32,9 @@ var Game = function (can, ctx) {
 			this.background.render();
 			this.player.render();
 			this.rockContainer.render();
+			this.ground.render();
+
+			this.menuContainer.render();
 		}
 
 		ctx.restore();
@@ -34,16 +46,32 @@ var Game = function (can, ctx) {
 	
 	}
 	this.update = function (delta) {
-		this.background.update(delta);
-		this.player.update(delta);
-		this.rockContainer.update(delta);
+		if(this.started){
+			this.background.update(delta);
+			this.player.update(delta);
+			this.rockContainer.update(delta);
+			this.ground.update(delta);
+			if(this.debug.debug){
+				if(this.debug.gameSpeed.faster){
+					this.sharedValues.movingSpeed += 0.5;
+				}
+				if(this.debug.gameSpeed.slower){
+					if(this.sharedValues.movingSpeed > 1){
+						this.sharedValues.movingSpeed -= 0.5;
+					}
+				}
+			}
+		}
+		this.menuContainer.update(delta);
 	}
 	this.init = function () {
 		new Init(this, function (status) {
 			if(status){
 				this.background.init();
 				this.player.init();
+				this.ground.init();
 				this.rockContainer.init();
+				this.menuContainer.init();
 				this.isInited = true;
 			}
 		}.bind(this));
@@ -84,6 +112,12 @@ window.addEventListener('keydown', function(e) {
         case 40:
             game.player.move.down = true;
             break;
+        case 107:
+        	game.debug.gameSpeed.faster = true;
+        	break;
+        case 109:
+        	game.debug.gameSpeed.slower = true;
+        	break;
     }
 }, false);
 window.addEventListener('keyup', function(e) {
@@ -100,5 +134,11 @@ window.addEventListener('keyup', function(e) {
         case 40:
             game.player.move.down = false;
             break;
+        case 107:
+        	game.debug.gameSpeed.faster = false;
+        	break;
+        case 109:
+        	game.debug.gameSpeed.slower = false;
+        	break;
     }
 }, false);

@@ -73,7 +73,7 @@ var Init = function (game, mainCallback) {
 																					this.game.asset["plane"]["blue"]["part2"] = image;
 																					this.loadImage("Planes/planeBlue3.png", function (image) {
 																						this.game.asset["plane"]["blue"]["part3"] = image;
-																						mainCallback(true);
+																						this.loadLetters(mainCallback);
 																					}.bind(this));
 																				}.bind(this));
 																			}.bind(this));
@@ -96,5 +96,42 @@ var Init = function (game, mainCallback) {
 		}.bind(this));
 	}.bind(this));
 		
+	this.loadLetters = function (callback){
+		var letterList = ["letterA","letterB","letterC","letterD","letterE","letterF","letterG","letterH","letterI","letterJ","letterK","letterL","letterM","letterN","letterO","letterP","letterQ","letterR","letterS","letterT","letterU","letterV","letterW","letterX","letterY","letterZ"];
+		this.game.asset["letter"] = {};
+		this.loopLetter(letterList, 0, function () {
+			this.loadUI(callback);
+		}.bind(this));
+	}
+	this.loopLetter = function (listen, index, callback){
+		if(listen.length <= index){
+			callback();
+		}else{
+			var image = listen[index];
+			this.loadImage("Letters/"+image+".png", function (theImage) {
+				this.game.asset.letter[image] = theImage;
+				this.loopLetter(listen, ++index, callback);
+			}.bind(this));
+		}
+	}
 
+
+	this.loadUI = function (callback){
+		var uiList = ["buttonSmall", "UIbg"];
+		this.game.asset["ui"] = {};
+		this.loopUI(uiList, 0, function () {
+			callback(true);
+		});
+	}
+	this.loopUI = function (listen, index, callback){
+		if(listen.length <= index){
+			callback();
+		}else{
+			var image = listen[index];
+			this.loadImage("UI/"+image+".png", function (theImage) {
+				this.game.asset.ui[image] = theImage;
+				this.loopUI(listen, ++index, callback);
+			}.bind(this));
+		}
+	}
 }

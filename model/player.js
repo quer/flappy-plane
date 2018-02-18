@@ -20,8 +20,9 @@ var Player = function (game) {
 		this.image = this.game.asset.plane[this.color];
 	}
 	this.render = function () {
-		this.ctx.drawImage(this.image[this.getPart()], this.x, this.y);
-
+		if(this.game.started){
+			this.ctx.drawImage(this.image[this.getPart()], this.x, this.y);
+		}
 		if(this.game.debug){
 			var lines = this.getCords();
 			for (var i = 0; i < lines.length; i++) {
@@ -51,13 +52,14 @@ var Player = function (game) {
 		}else if(this.move.left && this.move(-this.movementSpeed, 0)){
 			this.x -= this.movementSpeed;
 		}
+		
 	}
 
 	this.move = function (x, y) {
 		x += this.x;
 		y += this.y;
 		var gab = this.movementSpeed;
-		if(x < gab || x + this.image[this.getPart()].width > this.game.can.width-gab || y < gab || y + this.image[this.getPart()].height > this.game.can.height -gab){
+		if(x < gab || x + this.image[this.getPart()].width > this.game.can.width-gab || y < gab || y + this.image[this.getPart()].height > this.game.can.height - gab - 40){
 			return false;
 		}
 		return true;

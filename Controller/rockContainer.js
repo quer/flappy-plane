@@ -2,17 +2,16 @@ var RockContainer = function (game) {
 	this.game = game;
 	this.image = {};
 	this.ctx = game.ctx;
-	this.topParts = ["rockDown", "rockGrassDown", "rockIceDown", "rockSnowDown"];
-	this.bottomParts = ["rock", "rockGrass", "rockIce", "rockSnow"];
 	this.lastaddetRock = 0;
+	this.LastKnownMovingSpeed = 0;
 	this.rocks = [];
 
 	this.init = function () {
-		for (var i = 0; i < this.topParts.length; i++) {
-			this.image[this.topParts[i]] = this.game.asset[this.topParts[i]];
-		}
-		for (var i = 0; i < this.bottomParts.length; i++) {
-			this.image[this.bottomParts[i]] = this.game.asset[this.bottomParts[i]];
+		var themes = this.game.sharedValues.themes;
+		this.LastKnownMovingSpeed = this.game.sharedValues.movingSpeed;
+		for (var i = 0; i < themes.length; i++) {
+			this.image[themes[i].rock.top] = this.game.asset[themes[i].rock.top];
+			this.image[themes[i].rock.bottom] = this.game.asset[themes[i].rock.bottom];
 		}
 	}
 
@@ -22,9 +21,10 @@ var RockContainer = function (game) {
 		}
 	}
 	this.update = function (delta) {
-		if(this.lastaddetRock + 100 < delta){
+		if(this.lastaddetRock + (100 / this.LastKnownMovingSpeed) < delta){
 			this.addRock();
 			this.lastaddetRock = delta;
+			this.LastKnownMovingSpeed = this.game.sharedValues.movingSpeed;
 		}
 
 		for (var i = this.rocks.length - 1; i >= 0; i--) {
@@ -35,8 +35,8 @@ var RockContainer = function (game) {
 		}
 	}
 	this.addRock = function () {
-		var part = Math.floor((Math.random() * this.topParts.length));
-		var rock = new Rock(this.game, this.image[this.topParts[part]], this.image[this.bottomParts[part]]);
+		var activeTheme = this.game.sharedValues.getTheme();
+		var rock = new Rock(this.game, this.image[activeTheme.rock.top], this.image[activeTheme.rock.bottom]);
 		this.rocks.push(rock);
 		console.log(this.rocks.length);
 	}
