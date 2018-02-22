@@ -170,6 +170,9 @@ var Letters = function (game, word, scale) {
 			case ' ':
 				letterImage = asset["letterSpace"];
 				break;
+			case '!':
+				letterImage = asset["letter!"];
+				break;
 			default: 
 				letterImage = asset["letterZ"];
 				break;
