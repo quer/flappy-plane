@@ -7,7 +7,7 @@ var MainMenu = function (game) {
 	}
 	this.render = function (){
 		if(this.show && this.inited){
-			var letters = Letters(this.game, "Follow Mukuduk! ;)", 1);
+			var letters = Letters(this.game, "Follow Mukuduk!", 1);
 			var startPoss = {x: 100, y: 100};
 			var currentWidth = 0;
 			for (var i = 0; i < letters.letters.length; i++) {
@@ -15,6 +15,8 @@ var MainMenu = function (game) {
 				this.game.ctx.drawImage(image, (startPoss.x + currentWidth), startPoss.y);
 				currentWidth += image.width + letters.letterGab;
 			}
+
+			
 		}
 	}
 	this.update = function (delta) {

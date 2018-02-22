@@ -97,7 +97,7 @@ var Init = function (game, mainCallback) {
 	}.bind(this));
 		
 	this.loadLetters = function (callback){
-		var letterList = ["letterA","letterB","letterC","letterD","letterE","letterF","letterG","letterH","letterI","letterJ","letterK","letterL","letterM","letterN","letterO","letterP","letterQ","letterR","letterS","letterT","letterU","letterV","letterW","letterX","letterY","letterZ"];
+		var letterList = ["letterA","letterB","letterC","letterD","letterE","letterF","letterG","letterH","letterI","letterJ","letterK","letterL","letterM","letterN","letterO","letterP","letterQ","letterR","letterS","letterT","letterU","letterV","letterW","letterX","letterY","letterZ","letterSpace"];
 		this.game.asset["letter"] = {};
 		this.loopLetter(letterList, 0, function () {
 			this.loadUI(callback);
