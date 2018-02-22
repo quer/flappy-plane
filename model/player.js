@@ -29,7 +29,7 @@ var Player = function (game) {
 				this.game.ctx.beginPath();
 				this.game.ctx.moveTo(lines[i][0].x,lines[i][0].y);
 				this.game.ctx.lineTo(lines[i][1].x,lines[i][1].y);
-				this.game.ctx.stroke();		
+				//this.game.ctx.stroke();		
 			}
 		}
 	}

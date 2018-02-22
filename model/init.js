@@ -117,7 +117,7 @@ var Init = function (game, mainCallback) {
 
 
 	this.loadUI = function (callback){
-		var uiList = ["buttonSmall", "UIbg"];
+		var uiList = ["buttonSmall", "buttonLarge", "UIbg"];
 		this.game.asset["ui"] = {};
 		this.loopUI(uiList, 0, function () {
 			callback(true);
