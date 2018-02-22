@@ -134,4 +134,23 @@ var Init = function (game, mainCallback) {
 			}.bind(this));
 		}
 	}
+
+	this.loadCoins = function (callback){
+		var coinList = ["medalBronze", "medalSilver", "medalGold"];
+		this.game.asset["coin"] = {};
+		this.loopCoins(coinList, 0, function () {
+			callback(true);
+		});
+	}
+	this.loopCoins = function (listen, index, callback){
+		if(listen.length <= index){
+			callback();
+		}else{
+			var image = listen[index];
+			this.loadImage("UI/"+image+".png", function (theImage) {
+				this.game.asset.coin[image] = theImage;
+				this.loopCoins(listen, ++index, callback);
+			}.bind(this));
+		}
+	}
 }

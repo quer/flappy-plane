@@ -19,7 +19,7 @@ var MainMenu = function (game) {
 			//this.ctx.drawImage(this.imageTop, 0,0, this.imageTop.width, this.imageTop.height, this.x, this.topY, this.imageTop.width, this.topPartHeight);
 			var bgImage = this.game.asset.ui["UIbg"];
 			var bgWidth = 450;
-			var bgHeight = 350;
+			var bgHeight = 250;
 			var bgStartPos = {x: (this.game.can.width - bgWidth) / 2, y: 200};
 			
 			this.game.ctx.drawImage(bgImage, bgStartPos.x, bgStartPos.y, bgWidth, bgHeight);
@@ -27,7 +27,7 @@ var MainMenu = function (game) {
 			var startBtnImage = this.game.asset.ui["buttonLarge"];
 			var startBtnWidth = 196;
 			var startBtnHeight = 70;
-			var startBtnMargin = 10;
+			var startBtnMargin = 0;
 			var startBtnStartPos = {x: bgStartPos.x + bgWidth - startBtnWidth - startBtnMargin, y: 470};
 			
 			this.game.ctx.drawImage(startBtnImage, startBtnStartPos.x, startBtnStartPos.y, startBtnWidth, startBtnHeight);
