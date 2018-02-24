@@ -1,12 +1,12 @@
 var can = document.getElementById('game');
 var	ctx = can.getContext('2d');
-
 var Game = function (can, ctx) {
 	this.started = false;
 	this.asset = {};
 	this.ctx = ctx;
 	this.can = can;
 	this.sharedValues = SharedValues;
+	this.click = new Click(this);
 	this.player = new Player(this);
 	this.background = new Background(this);
 	this.rockContainer = new RockContainer(this);
@@ -36,7 +36,6 @@ var Game = function (can, ctx) {
 
 			this.menuContainer.render();
 		}
-
 		ctx.restore();
 
         var end = Date.now();
@@ -72,12 +71,32 @@ var Game = function (can, ctx) {
 				this.ground.init();
 				this.rockContainer.init();
 				this.menuContainer.init();
+				this.menuContainer.showNewMenu(this.sharedValues.screenList.mainMenu);
 				this.isInited = true;
 			}
 		}.bind(this));
 	}
+	this.reset = function(){
+		this.isInited = false;
+		this.player = new Player(this);
+		this.background = new Background(this);
+		this.rockContainer = new RockContainer(this);
+		this.ground = new Ground(this);
+		this.menuContainer.hideAll();
+		this.started = true;
+		this.activeMenu = this.sharedValues.screenList.game;
+
+		this.background.init();
+		this.player.init();
+		this.ground.init();
+		this.rockContainer.init();
+		this.isInited = true;
+	}
 	this.gameOver = function () {
 		gameStopGame();
+	}
+	this.clickEvent = function(x,y){
+		this.click.click(x,y);
 	}
 }
 var game = new Game(can, ctx);
@@ -141,4 +160,9 @@ window.addEventListener('keyup', function(e) {
         	game.debug.gameSpeed.slower = false;
         	break;
     }
+}, false);
+
+can.addEventListener('click', function(event) { 
+    game.clickEvent(event.offsetX || event.layerX, event.offsetY || event.layerY);
+
 }, false);

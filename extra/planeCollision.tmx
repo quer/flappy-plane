@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="2017.05.26" orientation="orthogonal" renderorder="right-down" width="1" height="1" tilewidth="88" tileheight="73" nextobjectid="2">
+ <tileset firstgid="1" source="tiled.tsx"/>
+ <layer name="Tile Layer 1" width="1" height="1">
+  <data encoding="csv">
+1
+</data>
+ </layer>
+ <objectgroup name="collision">
+  <object id="1" x="3" y="15">
+   <polyline points="0,0 5.75,-3.75 15.5,0 20.75,-5 19.75,-14.75 68.25,-14 67.75,-2 78,3.75 83,3.75 82.75,49 67.5,48.75 61,57.75 49.5,57.75 42.25,50.5 29.75,46.75 24,51.5 17.25,49.5 13.75,42.25 16,34 13,24.5 7.25,18.75 1,17.5 -2.75,6.75 -2.25,1.25 -0.25,0"/>
+  </object>
+ </objectgroup>
+</map>

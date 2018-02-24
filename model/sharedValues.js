@@ -45,9 +45,10 @@ var SharedValues = new function () {
 	}
 	];
 
-	this.menuList = {
-		mainMenu: 0,
-		pauseScreen: 1
+	this.screenList = {
+		game:0,
+		mainMenu: 1,
+		pauseScreen: 2
 	}
 
 	this.setNewTheme = function () {

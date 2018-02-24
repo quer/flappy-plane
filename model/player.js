@@ -15,6 +15,7 @@ var Player = function (game) {
         left: false
     }
     this.movementSpeed = 10;
+    this.score = 0;
 
 	this.init = function () {
 		this.image = this.game.asset.plane[this.color];
