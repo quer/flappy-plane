@@ -6,6 +6,67 @@ var Player = function (game) {
 	this.delta = 0;
 	this.x = 100;
 	this.y = 100;
+	this.collisionPoints = {
+                 "polyline":[
+                        {
+                         "x":0,
+                         "y":0
+                        }, 
+                        {
+                         "x":22.75,
+                         "y":-14.25
+                        }, 
+                        {
+                         "x":68,
+                         "y":-13.75
+                        }, 
+                        {
+                         "x":68.5,
+                         "y":4.75
+                        }, 
+                        {
+                         "x":81.75,
+                         "y":4.5
+                        }, 
+                        {
+                         "x":81.5,
+                         "y":48.75
+                        }, 
+                        {
+                         "x":65.5,
+                         "y":49.75
+                        }, 
+                        {
+                         "x":59,
+                         "y":57.25
+                        }, 
+                        {
+                         "x":49.25,
+                         "y":57.25
+                        }, 
+                        {
+                         "x":19,
+                         "y":49
+                        }, 
+                        {
+                         "x":8,
+                         "y":17.75
+                        }, 
+                        {
+                         "x":-0.25,
+                         "y":15.75
+                        }, 
+                        {
+                         "x":-2.25,
+                         "y":4.5
+                        }, 
+                        {
+                         "x":-0.5,
+                         "y":0.25
+                        }],
+                 "x":2.75,
+                 "y":15
+                };
 	this.cycle = ["part1", "part2", "part3", "part2"];
 	this.cycleIndex = 0;
 	this.move = {
@@ -16,6 +77,7 @@ var Player = function (game) {
     }
     this.movementSpeed = 10;
     this.score = 0;
+    this.scoreLog = [];
 
 	this.init = function () {
 		this.image = this.game.asset.plane[this.color];
@@ -30,7 +92,7 @@ var Player = function (game) {
 				this.game.ctx.beginPath();
 				this.game.ctx.moveTo(lines[i][0].x,lines[i][0].y);
 				this.game.ctx.lineTo(lines[i][1].x,lines[i][1].y);
-				//this.game.ctx.stroke();		
+				this.game.ctx.stroke();		
 			}
 		}
 	}
@@ -72,12 +134,20 @@ var Player = function (game) {
 		return this.image[this.getPart()];
 	}
 	this.getCords = function () {
-		var lineTopLeft = {x: this.x, y: this.y};
-		var lineTopRight = {x: this.x + this.getCurrentImage().width, y: this.y};
-		var lineBottomLeft = {x: this.x, y: this.y + this.getCurrentImage().height};
-		var lineBottomRight = {x: this.x + this.getCurrentImage().width, y: this.y + this.getCurrentImage().height};
+		var returnList = [];
+		for (var i = 0; i < this.collisionPoints.polyline.length - 1; i++) {
+			var cords1x = this.x + this.collisionPoints.polyline[i].x + this.collisionPoints.x;
+			var cords1y = this.y + this.collisionPoints.polyline[i].y + this.collisionPoints.y;
 
-		return [[lineTopLeft, lineTopRight], [lineTopRight, lineBottomRight], [lineBottomRight, lineBottomLeft], [lineBottomLeft, lineTopLeft]];
 
+			var cords2x = this.x + this.collisionPoints.polyline[(i + 1)].x + this.collisionPoints.x;
+			var cords2y = this.y + this.collisionPoints.polyline[(i + 1)].y + this.collisionPoints.y;
+			returnList.push([{x: cords1x, y: cords1y}, {x: cords2x, y: cords2y}]);
+		}
+		return returnList;
+	}
+	this.getPoint = function (points, type) {
+		this.score += points;
+		this.scoreLog.push({type: type, points: points});
 	}
 }

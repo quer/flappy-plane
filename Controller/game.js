@@ -10,8 +10,10 @@ var Game = function (can, ctx) {
 	this.player = new Player(this);
 	this.background = new Background(this);
 	this.rockContainer = new RockContainer(this);
+	this.coinContainer = new CoinContainer(this);
 	this.ground = new Ground(this);
 	this.menuContainer = new MenuContainer(this);
+	this.gameInterface = new GameInterface(this);
 	this.isInited = false;
 	this.debug = {
 		debug: true,
@@ -33,6 +35,8 @@ var Game = function (can, ctx) {
 			this.player.render();
 			this.rockContainer.render();
 			this.ground.render();
+			this.coinContainer.render();
+			this.gameInterface.render();
 
 			this.menuContainer.render();
 		}
@@ -49,7 +53,10 @@ var Game = function (can, ctx) {
 			this.background.update(delta);
 			this.player.update(delta);
 			this.rockContainer.update(delta);
+			this.coinContainer.update(delta);
 			this.ground.update(delta);
+			this.gameInterface.update(delta);
+
 			if(this.debug.debug){
 				if(this.debug.gameSpeed.faster){
 					this.sharedValues.movingSpeed += 0.5;
@@ -70,8 +77,10 @@ var Game = function (can, ctx) {
 				this.player.init();
 				this.ground.init();
 				this.rockContainer.init();
+				this.coinContainer.init();
 				this.menuContainer.init();
 				this.menuContainer.showNewMenu(this.sharedValues.screenList.mainMenu);
+				this.gameInterface.init();
 				this.isInited = true;
 			}
 		}.bind(this));
@@ -81,6 +90,7 @@ var Game = function (can, ctx) {
 		this.player = new Player(this);
 		this.background = new Background(this);
 		this.rockContainer = new RockContainer(this);
+		this.coinContainer = new CoinContainer(this);
 		this.ground = new Ground(this);
 		this.menuContainer.hideAll();
 		this.started = true;
@@ -90,10 +100,12 @@ var Game = function (can, ctx) {
 		this.player.init();
 		this.ground.init();
 		this.rockContainer.init();
+		this.coinContainer.init();
 		this.isInited = true;
 	}
 	this.gameOver = function () {
-		gameStopGame();
+		this.started = false;
+		this.menuContainer.showNewMenu(this.sharedValues.screenList.mainMenu);
 	}
 	this.clickEvent = function(x,y){
 		this.click.click(x,y);

@@ -119,7 +119,7 @@ var Init = function (game, mainCallback) {
 		var numberList = ["number0","number1","number2","number3","number4","number5","number6","number7","number8","number9"];
 		this.game.asset["number"] = {};
 		this.loopNumbers(numberList, 0, function () {
-			this.loadUI(callback);
+			this.loadCoins(callback);
 		}.bind(this));
 	}
 	this.loopNumbers = function (numbers, index, callback){
@@ -129,7 +129,7 @@ var Init = function (game, mainCallback) {
 			var image = numbers[index];
 			this.loadImage("numbers/"+image+".png", function (theImage) {
 				this.game.asset.number[image] = theImage;
-				this.loopLetter(numbers, ++index, callback);				
+				this.loopNumbers(numbers, ++index, callback);				
 			}.bind(this));
 		}
 	}
@@ -139,8 +139,8 @@ var Init = function (game, mainCallback) {
 		var uiList = ["buttonSmall", "buttonLarge", "UIbg"];
 		this.game.asset["ui"] = {};
 		this.loopUI(uiList, 0, function () {
-			callback(true);
-		});
+			this.loadNumbers(callback);
+		}.bind(this));
 	}
 	this.loopUI = function (listen, index, callback){
 		if(listen.length <= index){
@@ -160,7 +160,7 @@ var Init = function (game, mainCallback) {
 		this.game.asset["coin"] = {};
 		this.loopCoins(coinList, 0, function () {
 			callback(true);
-		});
+		}.bind(this));
 	}
 	this.loopCoins = function (listen, index, callback){
 		if(listen.length <= index){
@@ -173,4 +173,6 @@ var Init = function (game, mainCallback) {
 			}.bind(this));
 		}
 	}
+
+
 }

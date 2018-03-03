@@ -50,6 +50,10 @@ var SharedValues = new function () {
 		mainMenu: 1,
 		pauseScreen: 2
 	}
+	this.pointsType = {
+		standard: 0,
+		coin: 1
+	}
 
 	this.setNewTheme = function () {
 		this.historyThemes.push(this.activeTheme);

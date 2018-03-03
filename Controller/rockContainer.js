@@ -21,7 +21,7 @@ var RockContainer = function (game) {
 		}
 	}
 	this.update = function (delta) {
-		if(this.lastaddetRock + (100 / this.LastKnownMovingSpeed) < delta){
+		if(this.lastaddetRock + (150 / this.LastKnownMovingSpeed) < delta){
 			this.addRock();
 			this.lastaddetRock = delta;
 			this.LastKnownMovingSpeed = this.game.sharedValues.movingSpeed;
@@ -39,5 +39,8 @@ var RockContainer = function (game) {
 		var rock = new Rock(this.game, this.image[activeTheme.rock.top], this.image[activeTheme.rock.bottom]);
 		this.rocks.push(rock);
 		console.log(this.rocks.length);
+		if(this.rocks.length > 1){
+			this.game.coinContainer.addCoins(this.rocks[this.rocks.length - 2], this.rocks[this.rocks.length-1]);
+		}
 	}
 }

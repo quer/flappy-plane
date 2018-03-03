@@ -30,7 +30,7 @@ var MainMenu = function (game) {
 	}
 	this.render = function (){
 		if(this.show && this.inited){
-			var letters = new Letters(this.game, "Follow 1234567890!", 1, {x: 0, y: 100});
+			var letters = new Letters(this.game, "You Dieded!", 1, {x: 0, y: 100});
 			letters.center(this.game.can.width, null);
 			letters.render();
 

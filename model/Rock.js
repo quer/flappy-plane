@@ -6,6 +6,7 @@ var Rock = function (game, imageTop, imageBottom) {
 	this.x = ((this.game.ground.movingBackrounds) * this.game.ground.imageWidth) - this.imageTop.width;
 	this.topY = 0;
 	this.bottomY = 0;
+	this.haveGotPoint = false;
 
 	this.topPartHeight = 0;
 	this.bottomPartHeight = 0;
@@ -30,6 +31,15 @@ var Rock = function (game, imageTop, imageBottom) {
 				this.game.ctx.lineTo(lines[i][1].x,lines[i][1].y);
 				this.game.ctx.stroke();		
 			}
+			var pointCords = this.getPointCords();
+			this.game.ctx.strokeStyle = '#ff0000';
+			for (var i = 0; i < pointCords.length; i++) {
+				this.game.ctx.beginPath();
+				this.game.ctx.moveTo(lines[0].x,lines[0].y);
+				this.game.ctx.lineTo(lines[1].x,lines[1].y);
+				this.game.ctx.stroke();
+			}
+			this.game.ctx.strokeStyle = '#000';
 		}
 	}
 	this.update = function (delta) {
@@ -56,6 +66,16 @@ var Rock = function (game, imageTop, imageBottom) {
 					return true;
 				}
 			}
+			if(!this.haveGotPoint){
+				var pointCords = this.getPointCords();
+				if(this.linesIntersect(playerLine[i][0], playerLine[i][1], pointCords[0], pointCords[1])){
+					if(this.game.debug){
+						console.log("point!!");
+					}
+					this.game.player.getPoint(1, this.game.sharedValues.pointsType.standard);
+					this.haveGotPoint = true;
+				}
+			}
 		}
 		return false;
 	}
@@ -69,6 +89,12 @@ var Rock = function (game, imageTop, imageBottom) {
 		var lineBottomRight = {x: this.x + this.imageBottom.width, y: this.game.can.height};
 
 		return [[lineTopRight, lineTopBottomCenter], [lineTopLeft, lineTopBottomCenter], [lineBottomLeft, lineBottomTopCenter], [lineBottomTopCenter, lineBottomRight]];
+	}
+	this.getPointCords = function(){
+		var rockCords = this.getCords();
+		var topCords = rockCords[0][1];
+		var bottomCords = rockCords[2][1];
+		return [topCords, bottomCords];
 	}
 	this.linesIntersect = function(a1, a2, a3, a4) {
 		var x12 = a1.x - a2.x;
