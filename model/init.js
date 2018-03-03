@@ -115,6 +115,25 @@ var Init = function (game, mainCallback) {
 		}
 	}
 
+	this.loadNumbers = function (callback){
+		var numberList = ["number0","number1","number2","number3","number4","number5","number6","number7","number8","number9"];
+		this.game.asset["number"] = {};
+		this.loopNumbers(numberList, 0, function () {
+			this.loadUI(callback);
+		}.bind(this));
+	}
+	this.loopNumbers = function (numbers, index, callback){
+		if(numbers.length <= index){
+			callback();
+		}else{
+			var image = numbers[index];
+			this.loadImage("numbers/"+image+".png", function (theImage) {
+				this.game.asset.number[image] = theImage;
+				this.loopLetter(numbers, ++index, callback);				
+			}.bind(this));
+		}
+	}
+
 
 	this.loadUI = function (callback){
 		var uiList = ["buttonSmall", "buttonLarge", "UIbg"];
@@ -131,6 +150,7 @@ var Init = function (game, mainCallback) {
 			this.loadImage("UI/"+image+".png", function (theImage) {
 				this.game.asset.ui[image] = theImage;
 				this.loopUI(listen, ++index, callback);
+				
 			}.bind(this));
 		}
 	}

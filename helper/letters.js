@@ -1,6 +1,7 @@
 var Letters = function (game, word, scale, startPoss) {
 	this.game = game;
 	this.asset = game.asset.letter;
+	this.number = game.asset.number;
 	this.startPoss = startPoss;
 	this.scale = scale;
 	this.letterGab = 3;
@@ -176,34 +177,34 @@ var Letters = function (game, word, scale, startPoss) {
 				letterImage = this.asset["letter!"];
 				break;
 			case '0':
-				letterImage = this.asset["letterB"];
+				letterImage = this.number["number0"];
 				break;
 			case '1':
-				letterImage = this.asset["letterC"];
+				letterImage = this.number["number1"];
 				break;
 			case '2':
-				letterImage = this.asset["letterD"];
+				letterImage = this.number["number2"];
 				break;
 			case '3':
-				letterImage = this.asset["letterE"];
+				letterImage = this.number["number3"];
 				break;
 			case '4':
-				letterImage = this.asset["letterF"];
+				letterImage = this.number["number4"];
 				break;
 			case '5':
-				letterImage = this.asset["letterG"];
+				letterImage = this.number["number5"];
 				break;
 			case '6':
-				letterImage = this.asset["letterH"];
+				letterImage = this.number["number6"];
 				break;
 			case '7':
-				letterImage = this.asset["letterI"];
+				letterImage = this.number["number7"];
 				break;
 			case '8':
-				letterImage = this.asset["letterJ"];
+				letterImage = this.number["number8"];
 				break;
 			case '9':
-				letterImage = this.asset["letterK"];
+				letterImage = this.number["number9"];
 				break;
 				
 			default: 
