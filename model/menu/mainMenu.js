@@ -2,85 +2,74 @@ var MainMenu = function (game) {
 	this.game = game;
 	this.show = false;
 	this.inited = false;
-	
-	
 
 	this.init = function (){
 		this.inited = true;
-		// main box
-		this.bgImage = this.game.asset.ui["UIbg"];
-		this.bgWidth = 450;
-		this.bgHeight = 250;
-		this.bgStartPos = {x: (this.game.can.width - this.bgWidth) / 2, y: 200};
-		// menu box 
-		this.startBtnImage = this.game.asset.ui["buttonLarge"];
-		this.startBtnStartPos = {x: this.bgStartPos.x + this.bgWidth - this.startBtnImage.width, y: 470};
-		this.lettersMenu = new Letters(this.game, "Menu", 1.5, {x: this.startBtnStartPos.x, y: this.startBtnStartPos.y});
-		this.lettersMenu.center(this.startBtnImage.width, 63);
-		// retry box
-		this.optionsBtnImage = this.game.asset.ui["buttonLarge"];
-		this.optionsBtnStartPos = {x: this.bgStartPos.x, y: 470};
-		this.lettersRetry = new Letters(this.game, "Retry", 1.5, {x: this.optionsBtnStartPos.x, y: this.optionsBtnStartPos.y});
-		this.lettersRetry.center(this.optionsBtnImage.width, 63);
+		//header text
+		this.headerText = new Letters(this.game, "Flappy Plane!", 1, {x: 0, y: 100});
+		this.headerText.center(this.game.can.width, null);
+		//start button
+		this.startButton = {};
+		this.startButton.asset = this.game.asset.ui["buttonLarge"];
+		this.startButton.width = 450;
+		this.startButton.edgeWidth = 15;
+		this.startButton.loopAmount = 21;
+		this.startButton.loopWidth = 20;
+		this.startButton.poss = {x: (this.game.can.width - this.startButton.width) / 2, y: 200};
+		this.startButton.text = new Letters(this.game, "Start game", 1.5, {x: this.startButton.poss.x, y: this.startButton.poss.y});
+		this.startButton.text.center(this.startButton.width, 63);
 
-		this.game.click.add(this.game.sharedValues.screenList.mainMenu, [this.optionsBtnStartPos.x, this.optionsBtnStartPos.y, this.optionsBtnImage.width, this.optionsBtnImage.height], function(){
+		// menu box
+		this.setting = {};
+		this.setting.boxHeight = 470
+		this.setting.asset = this.game.asset.ui["buttonLarge"];
+		this.setting.poss = {x: this.startButton.poss.x + this.startButton.width - this.setting.asset.width, y: this.setting.boxHeight};
+		this.setting.text = new Letters(this.game, "setting", 1.5, {x: this.setting.poss.x, y: this.setting.poss.y});
+		this.setting.text.center(this.setting.asset.width, 63);
+		// retry box
+		/*this.highscore
+		this.optionsBtnImage = this.game.asset.ui["buttonLarge"];
+		this.optionsBtnStartPos = {x: startButton.poss.x, y: this.boxHeight};
+		this.lettersRetry = new Letters(this.game, "Highscore", 1.5, {x: this.optionsBtnStartPos.x, y: this.optionsBtnStartPos.y});
+		this.lettersRetry.center(this.optionsBtnImage.width, 63);
+*/
+		/*this.game.click.add(this.game.sharedValues.screenList.mainMenu, [this.optionsBtnStartPos.x, this.optionsBtnStartPos.y, this.optionsBtnImage.width, this.optionsBtnImage.height], function(){
 			console.log("click inde i!");
 			this.game.reset();
-		}.bind(this));
+		}.bind(this));*/
 	}
 	this.render = function (){
 		if(this.show && this.inited){
-			var letters = new Letters(this.game, "You Dieded!", 1, {x: 0, y: 100});
-			letters.center(this.game.can.width, null);
-			letters.render();
+			//header test
+			this.headerText.render();
+			//start button 
 
-			
-			//this.ctx.drawImage(this.imageTop, 0,0, this.imageTop.width, this.imageTop.height, this.x, this.topY, this.imageTop.width, this.topPartHeight);
-			
-			
 			// top part
-			this.game.ctx.drawImage(this.bgImage, 0, 0, 35, 35, this.bgStartPos.x, this.bgStartPos.y, 35, 35);
-			
-			for (var i = 0; i < 10; i++) {
-				this.game.ctx.drawImage(this.bgImage, 35, 0, 38, 35, this.bgStartPos.x + 35 + (i * 38), this.bgStartPos.y, 38, 35);
+			this.game.ctx.drawImage(this.startButton.asset, 0, 0,this.startButton.edgeWidth, this.startButton.asset.height, this.startButton.poss.x, this.startButton.poss.y, this.startButton.edgeWidth, this.startButton.asset.height);
+			// middle part
+			for (var i = 0; i < this.startButton.loopAmount; i++) {
+				this.game.ctx.drawImage(
+					this.startButton.asset, 
+
+					this.startButton.edgeWidth, 
+					0, 
+					this.startButton.loopWidth, 
+					this.startButton.asset.height, 
+
+					this.startButton.poss.x + this.startButton.edgeWidth + (this.startButton.loopWidth * i), 
+					this.startButton.poss.y, 
+					this.startButton.loopWidth, 
+					this.startButton.asset.height
+				);
 			}
-			this.game.ctx.drawImage(this.bgImage, this.bgImage.width - 35, 0, 35, 35, this.bgStartPos.x + this.bgWidth - 35, this.bgStartPos.y, 35, 35);
-			// middel part
-			for (var i = 0; i < 5; i++) {
-				this.game.ctx.drawImage(this.bgImage, 0, 35, 35, 36, this.bgStartPos.x, this.bgStartPos.y + 35 +( i * 36 ), 35, 36);
-			}
-			ctx.fillStyle = "#e0d1af";
-			ctx.fillRect(this.bgStartPos.x + 35,this.bgStartPos.y + 35,this.bgWidth - 35,this.bgHeight - 35);
-
-			for (var i = 0; i < 5; i++) {
-				this.game.ctx.drawImage(this.bgImage, this.bgImage.width - 35, 35, 35, 36, this.bgStartPos.x + this.bgWidth - 35, this.bgStartPos.y + 35 +( i * 36 ), 35, 36);
-			}
-			//bottom 
-			this.game.ctx.drawImage(this.bgImage, 0, this.bgImage.width-35, 35, 35, this.bgStartPos.x, this.bgStartPos.y + this.bgHeight - 35, 35, 35);
+			//bottom part
+			this.game.ctx.drawImage(this.startButton.asset, this.startButton.asset.width - this.startButton.edgeWidth, 0, this.startButton.edgeWidth, this.startButton.asset.height, this.startButton.poss.x + (this.startButton.width - this.startButton.edgeWidth), this.startButton.poss.y, this.startButton.edgeWidth, this.startButton.asset.height);
+			//start text
+			this.startButton.text.render();
 			
-			for (var i = 0; i < 10; i++) {
-				this.game.ctx.drawImage(this.bgImage, 35, this.bgImage.width-35, 38, 35, this.bgStartPos.x + 35 + (i * 38), this.bgStartPos.y + this.bgHeight - 35, 38, 35);
-			}
-			this.game.ctx.drawImage(this.bgImage, this.bgImage.width - 35, this.bgImage.width-35, 35, 35, this.bgStartPos.x + this.bgWidth - 35, this.bgStartPos.y + this.bgHeight - 35, 35, 35);
-
-
-			letters = new Letters(this.game, "You Lost!", 1.25, {x: this.bgStartPos.x, y: this.bgStartPos.y+ 30});
-			letters.center(this.bgWidth, null);
-			letters.render();
-			
-			letters = new Letters(this.game, this.game.player.score +" poins", 1.25, {x: this.bgStartPos.x, y: this.bgStartPos.y + 130});
-			letters.center(this.bgWidth, null);
-			letters.render();
-			//this.game.ctx.drawImage(this.bgImage, this.bgStartPos.x, this.bgStartPos.y, this.bgWidth, this.bgHeight);
-
-			
-			this.game.ctx.drawImage(this.startBtnImage, this.startBtnStartPos.x, this.startBtnStartPos.y);
-			this.lettersMenu.render();
-
-			
-			this.game.ctx.drawImage(this.optionsBtnImage, this.optionsBtnStartPos.x, this.optionsBtnStartPos.y);
-			this.lettersRetry.render();
-			
+			//settings 
+			this.game.ctx.drawImage(this.setting.asset, this.setting.poss.x, this.setting.poss.y);
+			this.setting.text.render();
 		}
 	}
 	this.update = function (delta) {

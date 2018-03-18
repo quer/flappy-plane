@@ -13,7 +13,7 @@ var GameInterface = function (game) {
 	this.render = function () {
 		if(this.show && this.inited){
 			this.score.render();
-		}	
+		}
 	}
 	this.update = function (delta) {
 		this.score.setText("score" + this.game.player.score);

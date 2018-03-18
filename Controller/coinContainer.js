@@ -18,9 +18,10 @@ var CoinContainer = function (game) {
 		
 		for (var i = this.coins.length - 1; i >= 0; i--) {
 			this.coins[i].update(delta);
-			/*if(this.coins[i].outOfBounce()){
+			if(this.coins[i].outOfBounce()){
+				this.coins[i].add();
 				this.coins.splice(i, 1);
-			}*/
+			}
 		}
 	}
 	this.addCoins = function (rock1, rock2) {
@@ -41,11 +42,11 @@ var CoinContainer = function (game) {
 	}
 	this.getCoinType = function () {
 		var returnType = null;
-		if(Math.random() > 0.66) {
+		if(Math.random() < 0.66) {
 			returnType = "medalBronze";
-			if(Math.random() > 0.50) {
+			if(Math.random() < 0.50) {
 				returnType = "medalSilver";
-				if(Math.random() > 0.40) {
+				if(Math.random() < 0.40) {
 					returnType = "medalGold";
 
 				}
